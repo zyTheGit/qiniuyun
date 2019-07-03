@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>Document</title>
+</head>
+
+<body>
+	<input type="file" id="inp">
+	<img id='img'>
+	<button id="uploadImage">提交</button>
+	<script src='./bundle.index.js'></script>
+	<script src='./qiniu.min.js'></script>
+	<script>
+		//bundle_token.js 抛出window.NodeQiniu对象
+		/*NodeQiniu={
+			getToken:function({
+				PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
+				mac:{
+					Ak,
+					SK	
+				}}){
+				
+			},
+			getHref:function(){
+				{domain,key}
+			}
+		}
+		var params={
+			PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
+			mac:{
+				Ak,
+				SK	
+			};
+		};*/
+
+		var putExtra = {
+			fname: "",
+			params: {},
+			mimeType: null
+		};
+		var config = {
+			disableStatisticsReport: false,
+			region: qiniu.region.z0,//选择机房的对应关系
+			retryCount: 6,
+			useCdnDomain: true
+		};
+		var token = getToken();
+		var domain = 'http://prl1q6329.bkt.clouddn.com/';
+		var requestUrl = qiniu.getUploadUrl(config);
+		requestUrl.then(e => {
+			console.log(e)
+			//domain=e;
+		});
+		document.getElementById('inp').addEventListener("change", function () {
+			var file = this.files[0];
+			if (file) {
+				var key = file.name;
+				putExtra.params["x:name"] = key.split(".")[0];
+				var observable = qiniu.upload(file, key, token, putExtra, confirm);
+
+				uploadImage.onclick = function () {
+					var subObject = {
+						next(res) {
+							console.log(res)
+						},
+						error(err) {
+							alert("上传失败");
+							console.log(err)
+						},
+						complete(res) {
+							alert("上传成功");
+							console.log(res)
+							getSuccessImg(key);
+						}
+					};
+					var subscription = observable.subscribe(subObject) // 上传开始
+				}
+
+				console.log(requestUrl);
+				//subscription.unsubscribe() // 上传取消
+			}
+
+		})
+
+		//获取上传成功的图片
+		function getSuccessImg(key) {
+			var newUrl = NodeQiniu.getHref({
+				domain,
+				key
+			});
+
+			var imgNew = new Image();
+			imgNew.onload = function () {
+				imgNew.src = newUrl
+				imgNew.h = 450
+				document.getElementById("img").src = newUrl;
+			}
+			imgNew.src = newUrl;
+		}
+
+		//获取token
+		function getToken(){
+			return NodeQiniu.getToken({
+				PutPolicy:{scope: "test1"},
+				//mac:{
+				//	Ak:'',
+				//	SK:''
+				//}
+			});
+		}
+
+		function qiNiuYun(){
+			
+		}
+	</script>
+</body>
+
+</html>
