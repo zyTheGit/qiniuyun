@@ -14,7 +14,7 @@
 	<input type="file" id="inp">
 	<img id='img'>
 	<button id="uploadImage">提交</button>
-	<script src='./bundle.index.js'></script>
+	<script src='../node/dest/bundle.index.js'></script>
 	<script src='./qiniu.min.js'></script>
 	<script>
 		//bundle_token.js 抛出window.NodeQiniu对象
@@ -22,7 +22,7 @@
 			getToken:function({
 				PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
 				mac:{
-					Ak,
+					AK,
 					SK	
 				}}){
 				
@@ -34,7 +34,7 @@
 		var params={
 			PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
 			mac:{
-				Ak,
+				AK,
 				SK	
 			};
 		};*/
@@ -50,7 +50,8 @@
 			retryCount: 6,
 			useCdnDomain: true
 		};
-		var token = getToken();
+		var token = token();
+		console.log(token);
 		var domain = 'http://prl1q6329.bkt.clouddn.com/';
 		var requestUrl = qiniu.getUploadUrl(config);
 		requestUrl.then(e => {
@@ -105,18 +106,18 @@
 		}
 
 		//获取token
-		function getToken(){
+		function token() {
 			return NodeQiniu.getToken({
-				PutPolicy:{scope: "test1"},
-				//mac:{
-				//	Ak:'',
-				//	SK:''
-				//}
+				PutPolicy: { scope: "test1" },
+				mac: {
+					Ak: 'W-ijSDypNJ66zlKeB-3LQH12RvK-d6CKYySipyxu',
+					SK: 'hJYm0YHtLXyIIpld0v9oLiTXBd_9T_safODcbOCR'
+				}
 			});
 		}
 
-		function qiNiuYun(){
-			
+		function qiNiuYun() {
+
 		}
 	</script>
 </body>

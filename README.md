@@ -6,7 +6,7 @@ window.NodeQiniu={
 	getToken:function({
 	  PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
 	  mac:{
-		Ak,
+		AK,
 		SK	
 	  }
 	}),
@@ -22,7 +22,7 @@ window.NodeQiniu={
 	getToken:function({
 	  PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
 	  mac:{
-		Ak,
+		AK,
 		SK	
 	  }
 	}),
@@ -37,7 +37,7 @@ let NodeQiniu={
 	getToken:function({
 	  PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
 	  mac:{
-		Ak,
+		AK,
 		SK	
 	  }
 	}),

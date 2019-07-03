@@ -9,7 +9,7 @@ var getToken = function (params) {
 	/*params={
 		PutPolicy:{scope: "test"},//配置qiniu.rs.PutPolicy
 		mac:{
-			Ak,
+			AK,
 			SK	
 		},
 		zone:'qiniu.zone.Zone_z0';
